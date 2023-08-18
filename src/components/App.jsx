@@ -27,15 +27,16 @@ export class App extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevState) {
     if (prevState.contacts !== this.state.contacts) {
       localStorage.setItem('phonebook', JSON.stringify(this.state.contacts));
     }
   }
 
-  clearLocalStorage = () => {
-    localStorage.setItem('phonebook', JSON.stringify(initialContacs));
-    window.location.reload();
+  defaultLocalStorage = () => {
+    this.setState({
+      contacts: initialContacs,
+    });
   };
 
   addContact = ({ name, number }) => {
@@ -82,7 +83,7 @@ export class App extends Component {
         <h2>Contacts</h2>
         <Filter value={filter} onChange={this.findContacts} />
         <ContactList contacts={stateContacts} onDelete={this.deleteContact} />
-        <button onClick={this.clearLocalStorage}>Factory settings 😀</button>
+        <button onClick={this.defaultLocalStorage}>Factory settings 😀</button>
       </AppStyled>
     );
   }
